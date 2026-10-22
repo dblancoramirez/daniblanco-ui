@@ -6,6 +6,7 @@ Componentes de interfaz reutilizables de Dani Blanco, distribuidos como un
 
 | Componente     | Qué es                                                                                     |
 | -------------- | ------------------------------------------------------------------------------------------ |
+| `ios-tab-bar`  | **Todo en uno**: la barra inferior de iOS con rutas, pantallas deslizables y «+» opcional.   |
 | `tab-bar`      | Barra de pestañas estilo iOS 27 con una lente líquida que se arrastra y se imanta.          |
 | `jelly-button` | Botón redondo flotante que se aplasta al pulsarlo y rebota (p. ej. el «+» junto a la barra). |
 | `tab-pager`    | Pantallas que se pasan deslizando con el dedo, enlazables a la barra. Sin enrutador.        |
@@ -16,12 +17,14 @@ Requisitos: React 19, Tailwind CSS v4 y `motion`. `tab-shell` necesita Next.js
 
 ## Instalar
 
+Todo de una vez (Next.js):
+
 ```bash
-npx shadcn add https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-bar.json
+npx shadcn add https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/ios-tab-bar.json
 ```
 
-Igual con `jelly-button`, `tab-pager` o `tab-shell` (este último trae también
-`tab-bar` y `tab-pager`). Los archivos quedan en `components/daniblanco-ui/` y
+O solo una pieza, cambiando el nombre del final por `tab-bar`, `jelly-button`,
+`tab-pager` o `tab-shell` (este último trae también `tab-bar` y `tab-pager`). Los archivos quedan en `components/daniblanco-ui/` y
 los colores se añaden a tu `globals.css` como variables `--dbui-*`.
 
 También se puede instalar desde una copia local del repositorio:
@@ -31,6 +34,26 @@ npx shadcn add ../daniblanco-ui/public/r/tab-bar.json
 ```
 
 ## Uso
+
+### Todo en uno: `IOSTabBar`
+
+```tsx
+const TABS: TabShellItem[] = [
+  { href: "/app", label: "Inicio", icon: HouseSimpleIcon, exact: true },
+  { href: "/app/movimientos", label: "Movimientos", icon: ListBulletsIcon },
+];
+
+// En el layout de las pestañas:
+<div className="fixed inset-0 flex flex-col">
+  <IOSTabBar items={TABS} screens={[Inicio, Movimientos]} onAdd={() => abrirFormulario()} addLabel="Añadir gasto">
+    {children /* rutas que no son pestañas (p. ej. ajustes): la barra se oculta */}
+  </IOSTabBar>
+</div>
+```
+
+Sin `onAdd` no hay botón. `addIcon` cambia el «+», y `bar` pasa el resto de
+opciones de la barra (`leading`, `trailing`, `height`, `showLabels`, `liquid`…).
+Para algo distinto, usa las piezas sueltas:
 
 ### Solo la barra
 

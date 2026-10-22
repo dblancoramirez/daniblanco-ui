@@ -4,11 +4,33 @@
   "homepage": "https://github.com/dblancoramirez/daniblanco-ui",
   "items": [
     {
+      "name": "ios-tab-bar",
+      "type": "registry:component",
+      "title": "iOS Tab Bar (Next.js)",
+      "description": "La barra inferior de iOS completa: pestañas enlazadas a las rutas, pantallas deslizables, lente líquida y botón «+» opcional. Instala todas las piezas.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-shell.json",
+        "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/jelly-button.json"
+      ],
+      "files": [
+        {
+          "path": "registry/daniblanco-ui/ios-tab-bar.tsx",
+          "type": "registry:component",
+          "target": "@components/daniblanco-ui/ios-tab-bar.tsx"
+        }
+      ]
+    },
+    {
       "name": "tab-bar",
       "type": "registry:component",
       "title": "Tab Bar",
       "description": "Barra de pestañas estilo iOS 27: cápsula de cristal con una lente líquida que se arrastra, se estira y se imanta a la pestaña más cercana.",
-      "dependencies": ["motion"],
+      "dependencies": [
+        "motion"
+      ],
       "files": [
         {
           "path": "registry/daniblanco-ui/tab-bar.tsx",
@@ -44,7 +66,9 @@
       "type": "registry:component",
       "title": "Jelly Button",
       "description": "Botón redondo flotante que se hunde y aplasta su contenido al pulsarlo, y rebota al soltar.",
-      "dependencies": ["motion"],
+      "dependencies": [
+        "motion"
+      ],
       "files": [
         {
           "path": "registry/daniblanco-ui/jelly-button.tsx",
@@ -70,7 +94,9 @@
       "type": "registry:component",
       "title": "Tab Pager",
       "description": "Pantallas que se pasan deslizando con el dedo, enlazables a la Tab Bar. No depende del enrutador.",
-      "dependencies": ["motion"],
+      "dependencies": [
+        "motion"
+      ],
       "files": [
         {
           "path": "registry/daniblanco-ui/tab-pager.tsx",
@@ -84,7 +110,9 @@
       "type": "registry:component",
       "title": "Tab Shell (Next.js)",
       "description": "Tab Bar + Tab Pager unidos a las rutas de Next.js: cada pestaña es una ruta y su pantalla.",
-      "dependencies": ["motion"],
+      "dependencies": [
+        "motion"
+      ],
       "registryDependencies": [
         "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-bar.json",
         "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-pager.json"

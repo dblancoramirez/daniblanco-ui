@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "ios-tab-bar",
+  "title": "iOS Tab Bar (Next.js)",
+  "description": "La barra inferior de iOS completa: pestañas enlazadas a las rutas, pantallas deslizables, lente líquida y botón «+» opcional. Instala todas las piezas.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-shell.json",
+    "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/jelly-button.json"
+  ],
+  "files": [
+    {
+      "path": "registry/daniblanco-ui/ios-tab-bar.tsx",
+      "content": "\"use client\";\n\nimport type { ReactNode } from \"react\";\nimport { JellyButton } from \"./jelly-button\";\nimport { TabShell, type TabShellProps } from \"./tab-shell\";\n\n/**\n * daniblanco-ui · IOSTabBar (Next.js)\n *\n * La barra inferior de iOS completa en un solo componente: pestañas enlazadas a\n * las rutas, pantallas que se pasan deslizando, la lente líquida y, si se pasa\n * `onAdd`, el botón «+» flotante a la derecha. Para algo distinto, las piezas\n * (TabBar, TabPager, TabShell, JellyButton) se pueden usar por separado.\n *\n * Va dentro de un contenedor de alto completo en columna, p. ej.\n * `<div className=\"fixed inset-0 flex flex-col\">`.\n */\n\nexport interface IOSTabBarProps extends TabShellProps {\n  /** Muestra el botón flotante a la derecha y lo llama al pulsarlo. */\n  onAdd?: () => void;\n  /** Nombre accesible del botón. */\n  addLabel?: string;\n  /** Contenido del botón (por defecto, un «+»). */\n  addIcon?: ReactNode;\n}\n\nexport function IOSTabBar({ onAdd, addLabel = \"Añadir\", addIcon, bar, ...shell }: IOSTabBarProps) {\n  const trailing =\n    bar?.trailing ??\n    (onAdd ? (\n      <JellyButton aria-label={addLabel} onClick={() => onAdd()}>\n        {addIcon}\n      </JellyButton>\n    ) : undefined);\n  return <TabShell {...shell} bar={{ ...bar, trailing }} />;\n}\n",
+      "type": "registry:component",
+      "target": "@components/daniblanco-ui/ios-tab-bar.tsx"
+    }
+  ],
+  "type": "registry:component"
+}
