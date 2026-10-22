@@ -1,0 +1,101 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "daniblanco-ui",
+  "homepage": "https://github.com/dblancoramirez/daniblanco-ui",
+  "items": [
+    {
+      "name": "tab-bar",
+      "type": "registry:component",
+      "title": "Tab Bar",
+      "description": "Barra de pestañas estilo iOS 27: cápsula de cristal con una lente líquida que se arrastra, se estira y se imanta a la pestaña más cercana.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "registry/daniblanco-ui/tab-bar.tsx",
+          "type": "registry:component",
+          "target": "@components/daniblanco-ui/tab-bar.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "dbui-accent": "#5856d6",
+          "dbui-accent-contrast": "#ffffff",
+          "dbui-accent-glow": "rgba(88, 86, 214, 0.45)",
+          "dbui-label": "#111114",
+          "dbui-glass": "rgba(249, 249, 251, 0.8)",
+          "dbui-lens": "rgba(118, 118, 128, 0.2)",
+          "dbui-border": "rgba(60, 60, 67, 0.16)",
+          "dbui-shadow": "0 10px 40px rgba(0, 0, 0, 0.16), 0 2px 8px rgba(0, 0, 0, 0.08)"
+        },
+        "dark": {
+          "dbui-accent": "#7d7aff",
+          "dbui-accent-contrast": "#ffffff",
+          "dbui-accent-glow": "rgba(88, 86, 214, 0.45)",
+          "dbui-label": "#ffffff",
+          "dbui-glass": "rgba(22, 22, 24, 0.78)",
+          "dbui-lens": "rgba(118, 118, 128, 0.36)",
+          "dbui-border": "rgba(84, 84, 88, 0.55)",
+          "dbui-shadow": "0 10px 40px rgba(0, 0, 0, 0.6)"
+        }
+      }
+    },
+    {
+      "name": "jelly-button",
+      "type": "registry:component",
+      "title": "Jelly Button",
+      "description": "Botón redondo flotante que se hunde y aplasta su contenido al pulsarlo, y rebota al soltar.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "registry/daniblanco-ui/jelly-button.tsx",
+          "type": "registry:component",
+          "target": "@components/daniblanco-ui/jelly-button.tsx"
+        }
+      ],
+      "cssVars": {
+        "light": {
+          "dbui-accent": "#5856d6",
+          "dbui-accent-contrast": "#ffffff",
+          "dbui-accent-glow": "rgba(88, 86, 214, 0.45)"
+        },
+        "dark": {
+          "dbui-accent": "#7d7aff",
+          "dbui-accent-contrast": "#ffffff",
+          "dbui-accent-glow": "rgba(88, 86, 214, 0.45)"
+        }
+      }
+    },
+    {
+      "name": "tab-pager",
+      "type": "registry:component",
+      "title": "Tab Pager",
+      "description": "Pantallas que se pasan deslizando con el dedo, enlazables a la Tab Bar. No depende del enrutador.",
+      "dependencies": ["motion"],
+      "files": [
+        {
+          "path": "registry/daniblanco-ui/tab-pager.tsx",
+          "type": "registry:component",
+          "target": "@components/daniblanco-ui/tab-pager.tsx"
+        }
+      ]
+    },
+    {
+      "name": "tab-shell",
+      "type": "registry:component",
+      "title": "Tab Shell (Next.js)",
+      "description": "Tab Bar + Tab Pager unidos a las rutas de Next.js: cada pestaña es una ruta y su pantalla.",
+      "dependencies": ["motion"],
+      "registryDependencies": [
+        "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-bar.json",
+        "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-pager.json"
+      ],
+      "files": [
+        {
+          "path": "registry/daniblanco-ui/tab-shell.tsx",
+          "type": "registry:component",
+          "target": "@components/daniblanco-ui/tab-shell.tsx"
+        }
+      ]
+    }
+  ]
+}

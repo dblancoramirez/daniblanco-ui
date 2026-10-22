@@ -1,0 +1,30 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "jelly-button",
+  "title": "Jelly Button",
+  "description": "Botón redondo flotante que se hunde y aplasta su contenido al pulsarlo, y rebota al soltar.",
+  "dependencies": [
+    "motion"
+  ],
+  "files": [
+    {
+      "path": "registry/daniblanco-ui/jelly-button.tsx",
+      "content": "\"use client\";\n\nimport { animate, motion, useMotionValue, useReducedMotion, type HTMLMotionProps } from \"motion/react\";\nimport type { ReactNode } from \"react\";\n\n/**\n * daniblanco-ui · JellyButton\n *\n * Botón redondo flotante: al pulsarlo se hunde y su contenido se aplasta como\n * una gota, y rebota al soltar. Pensado para ir junto a la TabBar (`trailing`),\n * pero sirve en cualquier sitio.\n *\n * Colores con variables CSS (opcionales): --dbui-accent, --dbui-accent-contrast\n * y --dbui-accent-glow.\n */\n\nexport interface JellyButtonProps extends Omit<HTMLMotionProps<\"button\">, \"children\"> {\n  children?: ReactNode;\n  /** Diámetro en píxeles. */\n  size?: number;\n  /** Cuánto se aplasta el contenido al pulsar (0 = nada). */\n  squash?: number;\n}\n\n/** Muelle con rebote para volver a la forma original. */\nconst JELLY = { type: \"spring\", stiffness: 520, damping: 14, mass: 0.7 } as const;\nconst PRESS = { type: \"spring\", stiffness: 700, damping: 22 } as const;\n\nexport function JellyButton({\n  children = <PlusGlyph />,\n  size = 62,\n  squash: amount = 0.3,\n  className,\n  style,\n  onPointerDown,\n  onPointerUp,\n  onPointerLeave,\n  onPointerCancel,\n  ...props\n}: JellyButtonProps) {\n  const reduceMotion = useReducedMotion();\n  const scale = useMotionValue(1);\n  const contentX = useMotionValue(1);\n  const contentY = useMotionValue(1);\n  const squash = (on: boolean) => {\n    if (reduceMotion) return;\n    const spring = on ? PRESS : JELLY;\n    void animate(scale, on ? 0.9 : 1, spring);\n    void animate(contentX, on ? 1 + amount : 1, spring);\n    void animate(contentY, on ? 1 - amount * 0.93 : 1, spring);\n  };\n  return (\n    <motion.button\n      type=\"button\"\n      {...props}\n      onPointerDown={(e) => (squash(true), onPointerDown?.(e))}\n      onPointerUp={(e) => (squash(false), onPointerUp?.(e))}\n      onPointerLeave={(e) => (squash(false), onPointerLeave?.(e))}\n      onPointerCancel={(e) => (squash(false), onPointerCancel?.(e))}\n      className={[\"pointer-events-auto relative grid shrink-0 touch-manipulation place-items-center overflow-hidden rounded-full\", className].filter(Boolean).join(\" \")}\n      style={{\n        width: size,\n        height: size,\n        scale,\n        background: \"var(--dbui-accent, #5856d6)\",\n        color: \"var(--dbui-accent-contrast, #ffffff)\",\n        boxShadow: \"0 8px 22px var(--dbui-accent-glow, rgba(88, 86, 214, 0.45))\",\n        ...style,\n      }}\n    >\n      {/* Brillo de cristal en el borde superior. */}\n      <span aria-hidden className=\"absolute inset-0 rounded-full bg-[linear-gradient(180deg,rgba(255,255,255,0.35),rgba(255,255,255,0)_55%)] shadow-[inset_0_1px_1px_rgba(255,255,255,0.6)]\" />\n      <motion.span className=\"relative grid place-items-center\" style={{ scaleX: contentX, scaleY: contentY }}>\n        {children}\n      </motion.span>\n    </motion.button>\n  );\n}\n\n/** «+» por defecto, para no depender de una librería de iconos. */\nfunction PlusGlyph() {\n  return (\n    <svg width=\"28\" height=\"28\" viewBox=\"0 0 256 256\" fill=\"none\" aria-hidden>\n      <path d=\"M40 128h176M128 40v176\" stroke=\"currentColor\" strokeWidth=\"24\" strokeLinecap=\"round\" />\n    </svg>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "@components/daniblanco-ui/jelly-button.tsx"
+    }
+  ],
+  "cssVars": {
+    "light": {
+      "dbui-accent": "#5856d6",
+      "dbui-accent-contrast": "#ffffff",
+      "dbui-accent-glow": "rgba(88, 86, 214, 0.45)"
+    },
+    "dark": {
+      "dbui-accent": "#7d7aff",
+      "dbui-accent-contrast": "#ffffff",
+      "dbui-accent-glow": "rgba(88, 86, 214, 0.45)"
+    }
+  },
+  "type": "registry:component"
+}

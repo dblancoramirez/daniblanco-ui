@@ -1,0 +1,22 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "tab-shell",
+  "title": "Tab Shell (Next.js)",
+  "description": "Tab Bar + Tab Pager unidos a las rutas de Next.js: cada pestaña es una ruta y su pantalla.",
+  "dependencies": [
+    "motion"
+  ],
+  "registryDependencies": [
+    "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-bar.json",
+    "https://raw.githubusercontent.com/dblancoramirez/daniblanco-ui/main/public/r/tab-pager.json"
+  ],
+  "files": [
+    {
+      "path": "registry/daniblanco-ui/tab-shell.tsx",
+      "content": "\"use client\";\n\nimport { usePathname, useRouter } from \"next/navigation\";\nimport { useRef, type ComponentType, type ReactNode } from \"react\";\nimport { TabBar, type TabBarItem, type TabBarProps } from \"./tab-bar\";\nimport { TabPager, usePager, usePagerSwipe, useWidth, type Pager } from \"./tab-pager\";\n\n/**\n * daniblanco-ui · TabShell (Next.js)\n *\n * Une la TabBar y el TabPager con las rutas: cada pestaña es una ruta y su\n * pantalla, y se pasa de una a otra deslizando o con la barra. En las rutas que\n * no son pestañas (p. ej. ajustes) muestra `children` y oculta la barra.\n */\n\nexport interface TabShellItem extends TabBarItem {\n  href: string;\n  /** Activa solo con la ruta exacta (útil para la raíz, p. ej. \"/app\"). Si no, también en sus subrutas. */\n  exact?: boolean;\n}\n\nexport function matchTab(pathname: string, item: TabShellItem) {\n  return item.exact ? pathname === item.href : pathname === item.href || pathname.startsWith(`${item.href}/`);\n}\n\n/** Pestaña de la ruta actual, enlazada a un paginador; -1 fuera de las pestañas. */\nexport function useRouteTabs(items: TabShellItem[]): Pager {\n  const pathname = usePathname();\n  const router = useRouter();\n  return usePager({\n    count: items.length,\n    index: items.findIndex((item) => matchTab(pathname, item)),\n    onIndexChange: (i) => router.push(items[i].href),\n  });\n}\n\nexport interface TabShellProps {\n  items: TabShellItem[];\n  /** Una pantalla por pestaña, en el mismo orden. */\n  screens: ComponentType[];\n  /** Lo que se muestra en las rutas que no son pestañas. */\n  children?: ReactNode;\n  /** Clases del contenedor de las pantallas (un `<main>`). */\n  className?: string;\n  /** Resto de opciones de la barra (trailing, leading, height, showLabels…). */\n  bar?: Omit<TabBarProps, \"items\" | \"value\" | \"onValueChange\" | \"progress\">;\n  /** Paginador propio (si se necesita fuera); por defecto se crea uno con las rutas. */\n  pager?: Pager;\n}\n\nexport function TabShell({ items, screens, children, className, bar, pager: external }: TabShellProps) {\n  const own = useRouteTabs(items);\n  const pager = external ?? own;\n  const main = useRef<HTMLElement>(null);\n  const { width, latest } = useWidth(main);\n  const swipe = usePagerSwipe(pager, latest);\n  const inTabs = pager.index >= 0;\n  return (\n    <>\n      <main\n        ref={main}\n        className={[\"relative flex min-h-0 flex-1 flex-col overflow-hidden [touch-action:pan-y_pinch-zoom]\", className].filter(Boolean).join(\" \")}\n        {...(inTabs ? swipe : {})}\n      >\n        {inTabs ? <TabPager pager={pager} width={width} screens={screens} /> : children}\n      </main>\n      {inTabs && <TabBar {...bar} items={items} value={pager.index} progress={pager.progress} onValueChange={pager.jump} />}\n    </>\n  );\n}\n",
+      "type": "registry:component",
+      "target": "@components/daniblanco-ui/tab-shell.tsx"
+    }
+  ],
+  "type": "registry:component"
+}
